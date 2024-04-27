@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
 #include "text.h"
 #include "separateUniqueWords.h"
 
@@ -64,9 +65,39 @@ void wordCount2(char* arr) {
     }
 }
 
+void wordCount3(char* arr) {
+
+    std::map<std::string, int> mp;
+
+    std::vector<std::string> words;
+    char delimiters[] = " ,.;\n";
+    char* token = NULL;
+    char* ptr = NULL;
+
+    token = strtok_s(arr, delimiters, &ptr);
+
+    while (token != NULL) {
+        words.push_back(std::string(token));
+        token = strtok_s(NULL, delimiters, &ptr);
+    }
+
+    for (auto& word : words) {
+        if (mp.count(word)) {
+            mp[word]++;
+        }
+        else {
+            mp[word] = 1;
+        }
+    }
+    for (auto& elem : mp) {
+        std::cout << elem.first << ' ' << elem.second << std::endl;
+    }
+}
+
 int main() {
     //wordCount(text);
-    wordCount2(text);
+    //wordCount2(text);
+    wordCount3(text);
 }
 
 
